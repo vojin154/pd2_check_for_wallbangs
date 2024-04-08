@@ -1,3 +1,5 @@
+--This is for the local player
+
 local old_func = PlayerDamage.damage_bullet
 function PlayerDamage:damage_bullet(attack_data)
     local attacker_unit = attack_data.attacker_unit --Get the cop, that's shooting
