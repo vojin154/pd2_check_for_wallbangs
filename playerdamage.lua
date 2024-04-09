@@ -17,6 +17,7 @@ function PlayerDamage:damage_bullet(attack_data)
     --While drawing a ray from the player registers the wall and can't shoot through it
     --Simply draw a ray from the player to the cop to check if there actually IS a wall
     --With the slot mask of world geometry to hit ONLY world stuff, such as walls
+    --The "report" arg, just tells the ray to just return a boolean instead of info, as we don't need anything other than true or false
     local ray = player_unit:raycast("ray", player_pos, attacker_unit_pos, "slot_mask", managers.slot:get_mask("world_geometry"), "report")
     if ray then --If wall was hit, then stop the function and don't let the original run to cancel the damage
         return
