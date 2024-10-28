@@ -5,14 +5,14 @@ local function fire_ray(player_unit, from, to)
 end
 
 local old_func = CopLogicAttack.aim_allow_fire
-function CopLogicAttack.aim_allow_fire(shoot, aim, data, my_data)
+function CopLogicAttack.aim_allow_fire(shoot, aim, data, my_data, ...)
 	local player_unit = data.attention_obj and data.attention_obj.unit
     local unit = data.unit
 
     --The unit is the local player, then ignore the rest and let the original run
     --As for local player we have the playerdamage.lua to take care of that
     if (not alive(player_unit)) or (not alive(unit)) then
-        return old_func(shoot, aim, data, my_data)
+        return old_func(shoot, aim, data, my_data, ...)
     end
 
     local player_pos = data.attention_obj.m_head_pos or player_unit:movement():m_head_pos()
@@ -34,5 +34,5 @@ function CopLogicAttack.aim_allow_fire(shoot, aim, data, my_data)
 		end
 	end
 
-    return old_func(shoot, aim, data, my_data)
+    return old_func(shoot, aim, data, my_data, ...)
 end

@@ -3,12 +3,12 @@ local function fire_ray(player_unit, from, to)
 end
 
 local old_func = CopActionShoot._chk_start_melee
-function CopActionShoot:_chk_start_melee(was_synced)
+function CopActionShoot:_chk_start_melee(...)
 	local player_unit = (self._attention and self._attention.unit) or managers.player:local_player()
 	local unit = self._unit
 
     if (not alive(player_unit)) or (not alive(unit)) then
-        return old_func(self, was_synced)
+        return old_func(self, ...)
     end
 
     local player_pos = self:_get_target_pos(self._shoot_from_pos, self._attention) or player_unit:movement():m_head_pos()
@@ -23,5 +23,5 @@ function CopActionShoot:_chk_start_melee(was_synced)
         return
 	end
 
-    return old_func(self, was_synced)
+    return old_func(self, ...)
 end

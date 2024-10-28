@@ -5,7 +5,7 @@ local function fire_ray(player_unit, from, to)
     return player_unit:raycast("ray", from, to, "slot_mask", managers.slot:get_mask("world_geometry"), "report")
 end
 
-local function validate(self, old_func, attack_data)
+local function validate(self, old_func, attack_data, ...)
     --Why check if we can't even take damage?
     if not self:_chk_can_take_dmg() then
         return
@@ -16,7 +16,7 @@ local function validate(self, old_func, attack_data)
 
     --Check if both are valid
     if (not alive(player_unit)) or (not alive(attacker_unit)) then
-        return old_func(self, attack_data) --Stop the function and let the original run
+        return old_func(self, attack_data, ...) --Stop the function and let the original run
     end
 
     local player_pos = player_unit:movement():m_head_pos() --Cops shoot the players head
@@ -33,20 +33,20 @@ local function validate(self, old_func, attack_data)
         return
     end
 
-    return old_func(self, attack_data) --Run the original
+    return old_func(self, attack_data, ...) --Run the original
 end
 
 do
     local old_func = PlayerDamage.damage_bullet
-    function PlayerDamage:damage_bullet(attack_data)
-        validate(self, old_func, attack_data)
+    function PlayerDamage:damage_bullet(attack_data, ...)
+        validate(self, old_func, attack_data, ...)
     end
 end
 
 do
     --Just incase
     local old_func = PlayerDamage.damage_melee
-    function PlayerDamage:damage_melee(attack_data)
-        validate(self, old_func, attack_data)
+    function PlayerDamage:damage_melee(attack_data, ...)
+        validate(self, old_func, attack_data, ...)
     end
 end
