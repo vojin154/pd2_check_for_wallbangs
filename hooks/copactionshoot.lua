@@ -11,7 +11,7 @@ function CopActionShoot:_chk_start_melee(...)
         return old_func(self, ...)
     end
 
-    local player_pos = self:_get_target_pos(self._shoot_from_pos, self._attention) or player_unit:movement():m_head_pos()
+    local player_pos = self:_get_target_pos(self._shoot_from_pos, self._attention, TimerManager:game():time()) or player_unit:movement():m_head_pos()
 	--We don't need the head here
     local unit_spine = unit:movement():m_com()
 
